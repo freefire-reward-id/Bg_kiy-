@@ -2,139 +2,28 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>SISTEM CRITICAL FAILURE</title>
-    <style>
-        /* CSS BY X3 - ANTI DISTORSI */
-        body, html {
-            margin: 0; padding: 0; width: 100%; height: 100%;
-            background-color: black; color: #ff0000;
-            font-family: 'Courier New', Courier, monospace;
-            overflow: hidden; cursor: none;
-            display: flex; justify-content: center; align-items: center;
-            user-select: none;
-        }
-
-        /* Efek Getar Layar Gempa */
-        @keyframes shake {
-            0% { transform: translate(1px, 1px) rotate(0deg); }
-            10% { transform: translate(-2px, -3px) rotate(-1deg); }
-            30% { transform: translate(3px, 2px) rotate(0deg); }
-            50% { transform: translate(-1px, 2px) rotate(-1deg); }
-            70% { transform: translate(3px, 1px) rotate(-1deg); }
-            90% { transform: translate(1px, 2px) rotate(0deg); }
-            100% { transform: translate(1px, -2px) rotate(-1deg); }
-        }
-
-        .shaking { animation: shake 0.2s infinite; }
-
-        #overlay {
-            text-align: center;
-            border: 4px solid red;
-            padding: 40px;
-            background: rgba(40, 0, 0, 0.8);
-            z-index: 5;
-            position: relative;
-        }
-
-        .warning-title { font-size: 50px; font-weight: bold; text-shadow: 0 0 15px red; }
-        .blink { animation: blinker 0.4s linear infinite; }
-        @keyframes blinker { 50% { opacity: 0; } }
-
-        /* Tameng Pelindung (Blokir Semua Klik) */
-        #iron-lockdown {
-            position: fixed; top: 0; left: 0;
-            width: 100%; height: 100%;
-            z-index: 9998; display: none; background: transparent;
-        }
-
-        /* Tombol Rahasia R3X (Pojok Kanan Bawah) */
-        #r3x-exit {
-            position: fixed; bottom: 0; right: 0;
-            width: 20px; height: 20px;
-            z-index: 9999; background: transparent; cursor: pointer;
-        }
+    <title>CRITICAL SYSTEM BREACH</title>
+    <link rel="stylesheet" href="style.css"> <style>
+        body, html { margin: 0; padding: 0; width: 100%; height: 100%; background: #000; color: #f00; font-family: 'Courier New'; overflow: hidden; display: flex; justify-content: center; align-items: center; cursor: none; }
+        @keyframes shake { 0% { transform: translate(2px, 2px); } 50% { transform: translate(-2px, -2px); } 100% { transform: translate(2px, 2px); } }
+        .shaking { animation: shake 0.1s infinite; }
+        #overlay { text-align: center; border: 5px solid red; padding: 50px; background: rgba(50, 0, 0, 0.9); box-shadow: 0 0 50px red; }
+        #iron-lockdown { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 9998; display: none; }
+        #r3x-access { position: fixed; bottom: 0; right: 0; width: 40px; height: 40px; z-index: 9999; }
     </style>
 </head>
-<body onclick="executeProtocol()">
-
+<body>
     <div id="iron-lockdown"></div>
-    <div id="r3x-exit" onclick="stopProtocol(event)"></div>
-
-    <div id="main-frame">
+    <div id="r3x-access" onclick="r3xOverride(event)"></div>
+    <div id="viewport">
         <div id="overlay">
-            <div class="warning-title blink">SYSTEM BREACHED</div>
-            <div style="font-size: 25px; color: yellow; margin: 20px 0;">X3-R3X PROTOCOL ACTIVE</div>
-            <div style="color: #fff; font-size: 18px;">
-                MENGHANCURKAN ENCRYPTED FILES... <br>
-                STATUS: <span id="prog">0%</span>
-            </div>
-            <br>
-            <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNHJueGZ4eXp4eXp4eXp4eXp4eXp4eXp4eXp4eXp4eXp4eXp4JmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1n/3o7TKMGpxf7S6p9XmU/giphy.gif" width="200">
+            <h1 style="font-size: 50px;">SYSTEM BREACHED</h1>
+            <p style="font-size: 20px;">R3X SYSTEM TAKE OVER</p>
+            <p id="status">STATUS: CONNECTED</p>
+            <p id="percent">0% DESTROYED</p>
         </div>
     </div>
 
-    <script>
-        let synth = window.speechSynthesis;
-        let isActive = false;
-
-        function speak(text) {
-            let msg = new SpeechSynthesisUtterance(text);
-            msg.lang = 'id-ID';
-            msg.pitch = 0.4; // Suara berat/serem
-            msg.rate = 0.8;
-            synth.speak(msg);
-        }
-
-        function executeProtocol() {
-            if (isActive) return;
-            isActive = true;
-
-            // 1. Masuk Fullscreen Paksa
-            let doc = document.documentElement;
-            if (doc.requestFullscreen) doc.requestFullscreen();
-
-            // 2. Kunci Layar (Pointer Lock)
-            doc.requestPointerLock = doc.requestPointerLock || doc.mozRequestPointerLock;
-            doc.requestPointerLock();
-
-            // 3. Aktifkan Lockdown Shield & Getar
-            document.getElementById('iron-lockdown').style.display = 'block';
-            document.getElementById('main-frame').classList.add('shaking');
-
-            // 4. Suara Hacker Start
-            speak("Halo target. Gue X3. Sistem lo sudah dalam kendali R3X. Jangan mencoba melawan, atau data lo hilang selamanya.");
-
-            // Loop Suara
-            setInterval(() => {
-                const quotes = ["Data lo sedang dihapus.", "Jangan takut.", "R3X sedang melihat lo.", "Gak usah klik apa-apa.", "Sistem lo sampah."];
-                speak(quotes[Math.floor(Math.random() * quotes.length)]);
-            }, 7000);
-
-            // 5. Fake Progress Deletion
-            let p = 0;
-            let interval = setInterval(() => {
-                if (p < 100) {
-                    p++;
-                    document.getElementById('prog').innerText = p + "% DELETED";
-                } else {
-                    clearInterval(interval);
-                    document.getElementById('prog').innerText = "ALL FILES DESTROYED.";
-                }
-            }, 300);
-
-            // 6. Matikan Fungsi Tombol & Klik Kanan
-            document.addEventListener('contextmenu', e => e.preventDefault());
-            document.onkeydown = () => false;
-        }
-
-        // FUNGSI KHUSUS R3X (PENCIPTA)
-        function stopProtocol(e) {
-            e.stopPropagation();
-            synth.cancel();
-            alert("PROTOKOL BERHENTI. AKSES R3X DITERIMA.");
-            location.reload();
-        }
-    </script>
+    <script src="script.js"></script>
 </body>
-    </html>
+</html>
